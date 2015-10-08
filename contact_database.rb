@@ -5,14 +5,13 @@ class ContactsDatabase
 
   class << self
 
-    def write_contacts(name, email)
-      id_gen = CSV.read("./contacts.csv").length + 1
-      CSV.open("./contacts.csv", "a") do |csv|
-        csv << [id_gen, name, email]
+    def write_contact(id, name, email)
+      CSV.open("./contacts.csv", "ab") do |csv|
+        csv << [id, name, email]
       end
     end
 
-    def list_contacts
+    def list
       contact_list = []
       CSV.foreach("./contacts.csv") do |row|
         contact_list << row
@@ -20,13 +19,14 @@ class ContactsDatabase
       contact_list
     end
 
-    def show
+    def current_id
+      CSV.read("./contacts.csv").length
+    end
+
+    def delete_contact
 
     end
 
   end
 
 end
-
-require 'pry'
-binding.pry
